@@ -15,10 +15,10 @@ interface IRequest {
 }
 
 @injectable()
-class UpdateProfile {
+class UpdateProfileService {
   constructor(
-    @inject('UserRepository')
-    private userRepository: IUsersRepository,
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
@@ -30,13 +30,13 @@ class UpdateProfile {
     email,
     password,
     old_password}: IRequest): Promise<User> {
-    const user = await this.userRepository.findById(user_id);
+    const user = await this.usersRepository.findById(user_id);
 
     if(!user) {
       throw new AppError('User not found');
     }
 
-    const userWithUpdateEmail = await this.userRepository.findByEmail(email);
+    const userWithUpdateEmail = await this.usersRepository.findByEmail(email);
 
     if (userWithUpdateEmail && userWithUpdateEmail.id !== user.id) {
       throw new AppError('E-mail already in use.');
@@ -64,8 +64,8 @@ class UpdateProfile {
       user.password = await this.hashProvider.generateHash(password);
     }
 
-    return this.userRepository.save(user);
+    return this.usersRepository.save(user);
   }
 }
 
-export default UpdateProfile;
+export default UpdateProfileService;
