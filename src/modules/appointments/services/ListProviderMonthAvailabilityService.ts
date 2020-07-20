@@ -39,7 +39,6 @@ class ListProviderMonthAvailabityService {
       { length: nunberOfDaysInMonth }, //tamanho do array
       (_, index) => index + 1,
     );
-    console.log(eachDayArray)
 
     const availability = eachDayArray.map(day => {
       const appointmentsInDay = appointments.filter( appointment => {
