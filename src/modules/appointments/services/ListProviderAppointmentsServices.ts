@@ -27,7 +27,7 @@ class ListProviderAppointmentsService{
     month,
     day
   }: IRequest): Promise<Appointment[]> {
-    const cacheData = await this.cacheProvider.recover('jax');
+    const cacheData = await this.cacheProvider.recover('singed');
 
     console.log(cacheData);
 
